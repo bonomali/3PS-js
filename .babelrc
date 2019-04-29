@@ -1,0 +1,19 @@
+{
+  "env": {
+    "ignore": [
+      "node_modules"
+    ],
+    "development": {
+      "presets": ["env"],
+      "plugins": [
+        "add-module-exports"
+      ]
+    },
+    "production": {
+      "presets": ["env", "minify"],
+      "plugins": [
+        "add-module-exports"
+      ]
+    }
+  }
+}
