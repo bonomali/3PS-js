@@ -215,7 +215,7 @@ Components.prototype.updateStl = function (componentID, formData) {
  * @param {String} version
  * @returns {Promise}
  */
-Components.prototype.deleteVersion = function (componentID, version) {
+Components.prototype.deleteVersion = function (componentID, version = 0) {
     return new Promise((resolve, reject) => {
         axios.delete(`${this.hostname}/components/${componentID}/stl/delete/${version}`, {
             headers: this.getHeaders(),
