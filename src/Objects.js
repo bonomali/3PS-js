@@ -238,6 +238,20 @@ Objects.prototype.star = function (objectID) {
 }
 
 /**
+ * GET /objects/all/stars
+ * @returns {Promise}
+ */
+Objects.prototype.getStarObjects = function (userID) {
+    return new Promise((resolve, reject) => {
+        axios.get(`${this.hostname}/objects/all/stars`, {
+            headers: this.getHeaders(),
+        })
+        .then(({ data }) => resolve(data))
+        .catch(err => reject(err))
+    })
+}
+
+/**
  * DEL /objects/:object_id/un-star
  *
  * @param {String} objectID

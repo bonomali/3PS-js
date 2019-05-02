@@ -176,6 +176,20 @@ Components.prototype.star = function (componentID) {
 }
 
 /**
+ * GET /components/all/stars
+ * @returns {Promise}
+ */
+Components.prototype.getStarComponents = function () {
+    return new Promise((resolve, reject) => {
+        axios.get(`${this.hostname}/components/all/stars`, {
+            headers: this.getHeaders(),
+        })
+        .then(({ data }) => resolve(data))
+        .catch(err => reject(err))
+    })
+}
+
+/**
  * DEL /components/:component_id/un-star
  *
  * @param {String} componentID
