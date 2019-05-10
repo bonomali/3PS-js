@@ -123,6 +123,23 @@ Components.prototype.get = function (componentID) {
 
 
 /**
+ * GET /components/:component_id/download
+ *
+ * @param {String} componentID
+ * @returns {Promise}
+ */
+Components.prototype.download = function (componentID) {
+    return new Promise((resolve, reject) => {
+        axios.get(`${this.hostname}/components/${componentID}/download`, {
+            headers: this.getHeaders()
+        })
+        .then(({ data }) => resolve(data))
+        .catch(err => reject(err))
+    })
+}
+
+
+/**
  * POST /components/:component_id
  *
  * @param {String} componentID
@@ -138,6 +155,23 @@ Components.prototype.update = function (componentID, component) {
         })
             .then(({ data }) => resolve(data))
             .catch(err => reject(err))
+    })
+}
+
+/**
+ * POST /components/:component_id/image
+ *
+ * @param {String} componentID
+ * @param {String} dataURL
+ * @returns {Promise}
+ */
+Components.prototype.updateImage = function (componentID, image) {
+    return new Promise((resolve, reject) => {
+        axios.post(`${this.hostname}/components/${componentID}/image`, { image }, {
+            headers: this.getHeaders()
+        })
+        .then(({ data }) => resolve(data))
+        .catch(err => reject(err))
     })
 }
 

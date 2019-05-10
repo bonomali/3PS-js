@@ -26,4 +26,16 @@ var TPS = function (apiKey, opts = {}) {
     this.printer = new Printer(apiKey, opts)
 }
 
+
+/**
+ * Alias of TPS.jobs.create()
+ *
+ * @param {Object} job
+ * @returns {Promise}
+ */
+TPS.prototype.print = function (job) {
+    return this.jobs.create(job)
+}
+
+
 module.exports = TPS

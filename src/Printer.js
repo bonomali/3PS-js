@@ -127,4 +127,23 @@ Printer.prototype.claimJob = function (jobID, printerGroupID) {
     })
 }
 
+
+/**
+ * POST /printer/jobs/{job_id}/charge
+ *
+ * @param {String} jobID
+ * @param {String} charge
+ * @returns {Promise}
+ */
+Printer.prototype.chargeJob = function (jobID, charge) {
+    return new Promise((resolve, reject) => {
+        axios.post(`${this.hostname}/printer/jobs/${jobID}/charge`, charge, {
+            headers: this.getHeaders()
+        })
+        .then(({ data }) => resolve(data))
+        .catch(err => reject(err))
+    })
+}
+
+
 module.exports = Printer
