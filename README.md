@@ -58,22 +58,43 @@ tps.objects.update(objectID, {userID, groupID}).then(object => {
 });
 ```
 
+### object.search(query)
+
+Returns an array of objects that match the query
+
+```js
+tps.objects.search(query).then(objects=> {
+  console.log(objects);
+});
+```
+
 ### object.delete(objectID)
 
 Deletes a single object
 
 ```js
-tps.objects.delete(objectID).then(item => {
-  console.log(item);
+tps.objects.delete(objectID).then(object) => {
+  console.log(object);
 });
 ```
+
 ### object.star(objectID)
 
-stars an object
+Stars an object
 
 ```js
-tps.objects.star(objectID).then(item => {
-  console.log(item);
+tps.objects.star(objectID).then(object)
+  console.log(object);
+});
+```
+
+### object.getStarObjects()
+
+Gets all stard objects
+
+```js
+tps.objects.getStarObjects().then(stars => {
+  console.log(stars);
 });
 ```
 ### object.unStar(objectID)
@@ -81,8 +102,8 @@ tps.objects.star(objectID).then(item => {
 un-Stars a single object
 
 ```js
-tps.objects.unStar(objectID).then(item => {
-  console.log(item);
+tps.objects.unStar(objectID).then(object) => {
+  console.log(object);
 });
 ```
 ### object.getTags(objectID)
@@ -183,6 +204,27 @@ tps.component.get(componentID).then(component => {
   console.log(component);
 });
 ```
+### component.getStarComponents()
+
+Gets all components that are star'd
+
+```js
+tps.component.getStarComponents().then(components => {
+  console.log(components);
+});
+```
+
+
+### component.download(componentID, versionNumber)
+
+Downloads one component
+
+```js
+tps.component.download(componentID, versionNumber).then(download => {
+    var win = window.open(download.url, '_blank');
+    win.focus();
+}
+```
 
 ### component.update(componentID, {groupID, userID})
 
@@ -190,6 +232,26 @@ Updates a component
 
 ```js
 tps.component.update(componentID, {groupID, userID}).then(component => {
+  console.log(component);
+});
+```
+
+### component.updateStl(objectID, StlData)
+
+Updates a single components's stl
+
+```js
+tps.component.updateStl(objectID, stlDat).then(object => {
+  console.log(object);
+});
+```
+
+### component.deleteVersion(componentID, versionNumber)
+
+Deletes a specific component version
+
+```js
+tps.component.deleteVersion(componentID, version).then(component => {
   console.log(component);
 });
 ```
@@ -212,6 +274,16 @@ tps.component.star(component).then(component => {
   console.log(component);
 });
 ```
+### component.getStarComponents()
+
+Gets all star'd components
+
+```js
+tps.component.getStarComponents().then(stars => {
+  console.log(stars);
+});
+```
+
 ### component.unStar(componentID)
 
 Un-stars a component

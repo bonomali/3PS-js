@@ -27,8 +27,11 @@ var Components = function (apiKey, opts = {}) {
  *
  * @returns {Array}
  */
-Components.prototype.getHeaders = function () {
+Components.prototype.getHeaders = function (files = null) {
     var headers = {}
+    if (files) {
+        headers['Content-Type'] = 'multipart/form-data'
+    }
     if (this.apiToken) headers['X-Api-Token'] = this.apiToken
     if (this.accessToken) headers['Authorization'] = 'Bearer ' + this.accessToken
     return headers
@@ -110,7 +113,8 @@ Components.prototype.getByGroupID = function (groupID, opts = {}) {
 Components.prototype.get = function (componentID) {
     return new Promise((resolve, reject) => {
         axios.get(`${this.hostname}/components/${componentID}`, {
-            headers: this.getHeaders()
+            headers: this.getHeaders('files')
+
         })
             .then(({ data }) => resolve(data))
             .catch(err => reject(err))
@@ -171,6 +175,19 @@ Components.prototype.star = function (componentID) {
     })
 }
 
+/**
+ * GET /components/all/stars
+ * @returns {Promise}
+ */
+Components.prototype.getStarComponents = function () {
+    return new Promise((resolve, reject) => {
+        axios.get(`${this.hostname}/components/all/stars`, {
+            headers: this.getHeaders(),
+        })
+        .then(({ data }) => resolve(data))
+        .catch(err => reject(err))
+    })
+}
 
 /**
  * DEL /components/:component_id/un-star
@@ -181,6 +198,57 @@ Components.prototype.star = function (componentID) {
 Components.prototype.unStar = function (componentID) {
     return new Promise((resolve, reject) => {
         axios.delete(`${this.hostname}/components/${componentID}/un-star`, {
+            headers: this.getHeaders()
+        })
+        .then(({ data }) => resolve(data))
+        .catch(err => reject(err))
+    })
+}
+
+/**
+ * POST /components/{component_id}/stl
+ *
+ * @param {String} componentID
+ * @param {FormData} formData
+ * @returns {Promise}
+ */
+Components.prototype.updateStl = function (componentID, formData) {
+    return new Promise((resolve, reject) => {
+        axios.post(`${this.hostname}/components/${componentID}/stl/`, formData, {
+            headers: this.getHeaders('files'),
+        })
+        .then(({ data }) => resolve(data))
+        .catch(err => reject(err))
+    })
+}
+
+/**
+ * DEL /components/{component_id}/stl/{version}
+ *
+ * @param {String} componentID
+ * @param {String} version
+ * @returns {Promise}
+ */
+Components.prototype.deleteVersion = function (componentID, version = 0) {
+    return new Promise((resolve, reject) => {
+        axios.delete(`${this.hostname}/components/${componentID}/stl/delete/${version}`, {
+            headers: this.getHeaders(),
+        })
+        .then(({ data }) => resolve(data))
+        .catch(err => reject(err))
+    })
+}
+
+/**
+ * GET /components/{component_id}/stl
+ *
+ * @param {String} componentID
+ * @param {String} version
+ * @returns {Promise}
+ */
+Components.prototype.download = function (componentID, version) {
+    return new Promise((resolve, reject) => {
+        axios.get(`${this.hostname}/components/${componentID}/download/${version}`, {
             headers: this.getHeaders()
         })
         .then(({ data }) => resolve(data))

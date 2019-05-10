@@ -109,6 +109,42 @@ Jobs.prototype.update = function (jobID, job) {
 
 
 // -----------------------------------------------------
+// Object(s)/Components 
+// -----------------------------------------------------
+
+/**
+ * GET /jobs/compoenents/all
+ *
+ * @returns {Promise}
+ */
+Jobs.prototype.getComponents = function () {
+    return new Promise((resolve, reject) => {
+        
+        axios.get(`${this.hostname}/jobs/components/all`, {
+            headers: this.getHeaders()
+        })
+        .then(({ data }) => resolve(data))
+        .catch(err => reject(err))
+    })
+}
+
+/**
+ * GET /jobs/components/:component_id
+ *
+ * @returns {Promise}
+ */
+Jobs.prototype.getComponent = function (componentID) {
+    return new Promise((resolve, reject) => {
+        
+        axios.get(`${this.hostname}/jobs/components/${componentID}`, {
+            headers: this.getHeaders()
+        })
+        .then(({ data }) => resolve(data))
+        .catch(err => reject(err))
+    })
+}
+
+// -----------------------------------------------------
 // Events
 // -----------------------------------------------------
 
