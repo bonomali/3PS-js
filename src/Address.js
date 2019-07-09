@@ -1,22 +1,14 @@
-const axios = require('axios')
-
+const axios = require("axios");
 
 /**
- * Addresses
+ * Address
  *
  * @param {String} apiKey
  * @param {Object} opts options
  *   @param {String} [opts.hostname]
  *   @param {String} [opts.accessToken]
  */
-var Addresses = function (apiKey, opts = {}) {
-    Object.assign(this, {
-        hostname: 'https://api.ideea.co.uk/api/v1',
-        accessToken: false,
-        apiKey: apiKey
-    }, opts)
-}
-
+var Address = function() {};
 
 // -----------------------------------------------------
 // Misc
@@ -27,12 +19,13 @@ var Addresses = function (apiKey, opts = {}) {
  *
  * @returns {Array}
  */
-Addresses.prototype.getHeaders = function () {
-    var headers = {}
-    if (this.apiToken) headers['X-Api-Token'] = this.apiToken
-    if (this.accessToken) headers['Authorization'] = 'Bearer ' + this.accessToken
-    return headers
-}
+Address.prototype.getHeaders = function() {
+    var headers = {};
+    if (this.apiToken) headers["X-Api-Token"] = this.apiToken;
+    if (this.accessToken)
+        headers["Authorization"] = "Bearer " + this.accessToken;
+    return headers;
+};
 
 // -----------------------------------------------------
 // ADDRESSES
@@ -52,16 +45,16 @@ Addresses.prototype.getHeaders = function () {
  *   @param {String} [address.delivery_instructions]
  * @returns {Promise}
  */
-Addresses.prototype.create = function (address) {
+Address.prototype.create = function(address) {
     return new Promise((resolve, reject) => {
-        axios.post(`${this.hostname}/address/create`, address, {
-            headers: this.getHeaders()
-        })
+        axios
+            .post(`${this.hostname}/address/create`, address, {
+                headers: this.getHeaders()
+            })
             .then(({ data }) => resolve(data))
-            .catch(err => reject(err))
-    })
-}
-
+            .catch(err => reject(err));
+    });
+};
 
 /**
  * GET /address/:addressID
@@ -69,19 +62,20 @@ Addresses.prototype.create = function (address) {
  * @param {String} addressID
  * @returns {Promise}
  */
-Addresses.prototype.get = function (addressID) {
+Address.prototype.get = function(addressID) {
     return new Promise((resolve, reject) => {
-        axios.get(`${this.hostname}/address/${addressID}`, {
-            headers: this.getHeaders()
-        })
+        axios
+            .get(`${this.hostname}/address/${addressID}`, {
+                headers: this.getHeaders()
+            })
             .then(({ data }) => resolve(data))
-            .catch(err => reject(err))
-    })
-}
+            .catch(err => reject(err));
+    });
+};
 
 /**
  * POST /address/:addressID
- * 
+ *
  * @param {String} addressID
  * @param {Object} address
  *   @param {String} [address.name]
@@ -93,15 +87,16 @@ Addresses.prototype.get = function (addressID) {
  *   @param {String} [address.delivery_instructions]
  * @returns {Promise}
  */
-Addresses.prototype.update = function (addressID, address) {
+Address.prototype.update = function(addressID, address) {
     return new Promise((resolve, reject) => {
-        axios.post(`${this.hostname}/address/${addressID}`, address, {
-            headers: this.getHeaders()
-        })
+        axios
+            .post(`${this.hostname}/address/${addressID}`, address, {
+                headers: this.getHeaders()
+            })
             .then(({ data }) => resolve(data))
-            .catch(err => reject(err))
-    })
-}
+            .catch(err => reject(err));
+    });
+};
 
 /**
  * POST /address/:addressID/default
@@ -109,31 +104,37 @@ Addresses.prototype.update = function (addressID, address) {
  * @param {String} addressID
  * @returns {Promise}
  */
-Addresses.prototype.setDefault = function (addressID) {
+Address.prototype.setDefault = function(addressID) {
     return new Promise((resolve, reject) => {
-        axios.post(`${this.hostname}/address/${addressID}/default`, {}, {
-            headers: this.getHeaders()
-        })
+        axios
+            .post(
+                `${this.hostname}/address/${addressID}/default`,
+                {},
+                {
+                    headers: this.getHeaders()
+                }
+            )
             .then(({ data }) => resolve(data))
-            .catch(err => reject(err))
-    })
-}
+            .catch(err => reject(err));
+    });
+};
 
 /**
- * GET /groups/:groupID/addresses
+ * GET /address/group/:groupID
  *
  * @param {String} groupID
  * @returns {Promise}
  */
-Addresses.prototype.getByGroupID = function (groupID) {
+Address.prototype.getByGroupID = function(groupID) {
     return new Promise((resolve, reject) => {
-        axios.get(`${this.hostname}/groups/${groupID}/addresses`, {
-            headers: this.getHeaders()
-        })
+        axios
+            .get(`${this.hostname}/address/group/${groupID}`, {
+                headers: this.getHeaders()
+            })
             .then(({ data }) => resolve(data))
-            .catch(err => reject(err))
-    })
-}
+            .catch(err => reject(err));
+    });
+};
 
 /**
  * DEL /address/:addressID/delete
@@ -141,15 +142,15 @@ Addresses.prototype.getByGroupID = function (groupID) {
  * @param {String} addressID
  * @returns {Promise}
  */
-Addresses.prototype.delete = function (addressID) {
+Address.prototype.delete = function(addressID) {
     return new Promise((resolve, reject) => {
-        axios.delete(`${this.hostname}/address/${addressID}/delete`, {
-            headers: this.getHeaders()
-        })
+        axios
+            .delete(`${this.hostname}/address/${addressID}/delete`, {
+                headers: this.getHeaders()
+            })
             .then(({ data }) => resolve(data))
-            .catch(err => reject(err))
-    })
-}
+            .catch(err => reject(err));
+    });
+};
 
-
-module.exports = Addresses
+module.exports = Address;

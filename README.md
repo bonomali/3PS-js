@@ -1,21 +1,21 @@
 <p align="center">
-  <img width="192" src="https://ideea.io/static/img/logo-text.svg" alt="Ideea">
+  <img width="192" src="https://ideea.io/static/img/3ps.png" alt="3PS">
 </p>
 
 ---
 
-### [3PS](https://ideea.io/3ps) &nbsp;&nbsp;&nbsp; [Ideea.io](https://ideea.io) &nbsp;&nbsp;&nbsp; [Full Documentation](https://ideea.io/docs/3ps) &nbsp;&nbsp;&nbsp; [Cheat Sheet](https://github.com/Ideea-inc/3ps-js/blob/master/docs/cheat-sheet.md)
+### [3PS](https://ideea.io/3ps) &nbsp;&nbsp;|&nbsp;&nbsp; [Ideea.io](https://ideea.io) &nbsp;&nbsp;|&nbsp;&nbsp; [Full Documentation](https://ideea.io/docs/3ps) &nbsp;&nbsp;|&nbsp;&nbsp; [NPM](https://www.npmjs.com/package/3ps-js)
 
 ---
 
 # 3PS JS SDK
 
-This is the official SDK for the 3PS API. You can use this SDK to create components and objects and start new print jobs.
+The 3PS API represents an abstraction of a 3D printer, with this API you can upload a .STL file and receive a tangible object just hours later. With this API you can print in any material, at any size, shipped anywhere in the world. Add 3D printing to your app, product or service in a matter of minutes with 3PS.
 
 ## Installation
 
 ```
-$ npm install tps
+$ npm install 3ps-js
 ```
 
 ## Getting Started
@@ -24,7 +24,7 @@ $ npm install tps
 const TPS = require('3ps-js')
 const fs = require('fs')
 
-var tps = new TPS('YOUR_API_KEY')
+var tps = new TPS('API_KEY')
 
 var component = {
 	name: 'Dice',
@@ -44,7 +44,7 @@ var component = {
 
 
 // Create Component
-tps.components.create(component).then((newComponent) =&gt; {
+tps.component.create(component).then(function(newComponent) {
 
 	// Print Component
 	tps.print({
@@ -53,7 +53,7 @@ tps.components.create(component).then((newComponent) =&gt; {
 		components: [{
 			id: newComponent.id
 		}]
-	}).then((job) =&gt; {
+	}).then(function(job) {
 		console.log(`Printing ${job.id}`)
 	}) 
 })
@@ -61,13 +61,13 @@ tps.components.create(component).then((newComponent) =&gt; {
 
 ## Methods
 
-This is not a complete list of methods. Please refer to the [full documentation](https://ideea.io/3ps/docs) for the full list of methods.
+Please refer to the [full documentation](https://ideea.io/3ps/docs) for the full list of methods.
 
-### TPS.components.create(component)
+### TPS.component.create(component)
 In 3PS a component represents a single .STL file and an object is a collection of multiple components. Your component can be public or private, public components are accessible by all users and can be printed by anyone. You can also set your component’s default print settings for easy replication.
 
 ```js
-tps.components.create({
+tps.component.create({
 	name: 'Dice',
 	is_public: false,
 	group_id: '00ffedbb-ff29-5138-9b5d-cd1f6ae3bc6b',
@@ -89,7 +89,7 @@ tps.components.create({
 ```
 
 ### TPS.print(job)
-A job reprsents a request from a customer to print one or more componets. To create a job send an array of objects and compoents with the .print() method
+A job reprsents a request from a customer to print one or more componets. To create a job send an array of objects and compoents using the .print() method
 
 ```js
 tps.print({
