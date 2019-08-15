@@ -1,29 +1,30 @@
 {
-  "name": "3ps-js",
-  "version": "1.2.0",
-  "description": "JavaScript SDK for 3PS",
-  "main": "./src/index.js",
-  "scripts": {
-    "test": "mocha tests"
-  },
-  "files": [
-    "src/"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ideea-inc/3PS-js.git"
-  },
-  "author": "Anthony Budd <anthonybudd@ideea.co.uk>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/ideea-inc/3PS-js/issues"
-  },
-  "homepage": "https://github.com/ideea-inc/3PS-js#readme",
-  "devDependencies": {
-    "chai": "^4.2.0",
-    "mocha": "^5.0.0"
-  },
-  "dependencies": {
-    "axios": "^0.18.0"
-  }
+    "name": "3ps-js",
+    "version": "1.3.0",
+    "description": "JavaScript SDK for 3PS",
+    "main": "./src/index.js",
+    "scripts": {
+        "test": "mocha tests"
+    },
+    "files": [
+        "src/"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ideea-inc/3PS-js.git"
+    },
+    "author": "Anthony Budd <anthonybudd@ideea.co.uk>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/ideea-inc/3PS-js/issues"
+    },
+    "homepage": "https://github.com/ideea-inc/3PS-js#readme",
+    "devDependencies": {
+        "chai": "^4.2.0",
+        "mocha": "^5.0.0",
+        "form-data": "^2.5.0"
+    },
+    "dependencies": {
+        "axios": "^0.18.0"
+    }
 }

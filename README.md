@@ -44,10 +44,10 @@ var component = {
 
 
 // Create Component
-tps.component.create(component).then(function(newComponent) {
+tps.components.create(component).then(function(newComponent) {
 
 	// Print Component
-	tps.print({
+	tps.jobs.create({
 		group_id: '00ffedbb-ff29-5138-9b5d-cd1f6ae3bc6b',
 		fulfillment_type: 'standard',
 		components: [{
@@ -55,7 +55,7 @@ tps.component.create(component).then(function(newComponent) {
 		}]
 	}).then(function(job) {
 		console.log(`Printing ${job.id}`)
-	}) 
+	})
 })
 ```
 
@@ -63,11 +63,11 @@ tps.component.create(component).then(function(newComponent) {
 
 Please refer to the [full documentation](https://ideea.io/3ps/docs) for the full list of methods.
 
-### TPS.component.create(component)
+### TPS.components.create(component)
 In 3PS a component represents a single .STL file and an object is a collection of multiple components. Your component can be public or private, public components are accessible by all users and can be printed by anyone. You can also set your component’s default print settings for easy replication.
 
 ```js
-tps.component.create({
+tps.components.create({
 	name: 'Dice',
 	is_public: false,
 	group_id: '00ffedbb-ff29-5138-9b5d-cd1f6ae3bc6b',
@@ -88,11 +88,11 @@ tps.component.create({
 })
 ```
 
-### TPS.print(job)
-A job reprsents a request from a customer to print one or more componets. To create a job send an array of objects and compoents using the .print() method
+### TPS.jobs.create(job)
+A job reprsents a request from a customer to print one or more componets. To create a job send an array of objects and compoents using method TPS.job.create().
 
 ```js
-tps.print({
+tps.jobs.create({
 	group_id: '00ffedbb-ff29-5138-9b5d-cd1f6ae3bc6b',
 	components: [{
 		id: 'cead04bc-cf4f-402a-8e90-1f33669efa03'

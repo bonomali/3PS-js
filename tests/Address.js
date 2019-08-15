@@ -1,5 +1,5 @@
 var { assert } = require("chai");
-const tps = require("./tps");
+const tps = require("./config/tps");
 
 const ADDRESS_ID = "00000000-0000-0000-0000-000000000000";
 const GROUP_ID = "2f8fdea3-b875-4926-90c8-5a1b11b818c8";
@@ -68,6 +68,33 @@ describe("Addresses", () => {
         });
     });
 
+    describe("TPS.address.getByGroupID()", () => {
+        it("Should set the default address", done => {
+            tps.address
+                .getByGroupID(GROUP_ID)
+                .then(response => {
+                    assert.isObject(response);
+                    assert.equal(response.status, 'ok');
+
+                    assert.isArray(response.data);
+                    assert.containsAllKeys(response.data[0], [
+                        'group_id',
+                        'name',
+                        'address_line_1',
+                        'address_line_2',
+                        'zipcode',
+                        'city',
+                        'country',
+                        'state',
+                        'delivery_instructions',
+                    ]);
+
+                    done();
+                })
+                .catch(err => done(err));
+        });
+    });
+
     describe("TPS.address.update()", () => {
         it("Should update the address", done => {
             
@@ -95,33 +122,6 @@ describe("Addresses", () => {
                     assert.equal(response.data.city,                   update.city);
                     assert.equal(response.data.country,                update.country);
                     assert.equal(response.data.delivery_instructions,  update.delivery_instructions);
-                    done();
-                })
-                .catch(err => done(err));
-        });
-    });
-
-    describe("TPS.address.getByGroupID()", () => {
-        it("Should set the default address", done => {
-            tps.address
-                .getByGroupID(GROUP_ID)
-                .then(response => {
-                    assert.isObject(response);
-                    assert.equal(response.status, 'ok');
-
-                    assert.isArray(response.data);
-                    assert.containsAllKeys(response.data[0], [
-                        'group_id',
-                        'name',
-                        'address_line_1',
-                        'address_line_2',
-                        'zipcode',
-                        'city',
-                        'country',
-                        'state',
-                        'delivery_instructions',
-                    ]);
-
                     done();
                 })
                 .catch(err => done(err));

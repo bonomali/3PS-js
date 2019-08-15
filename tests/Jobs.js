@@ -1,5 +1,5 @@
 var { assert } = require("chai");
-const tps = require("./tps");
+const tps = require("./config/tps");
 
 const JOB_ID = "20cc55a3-5d26-43b1-9690-25f5747957c2";
 const CANCEL_JOB_ID = "11111111-aaaa-aaaa-aaaa-aaaaaaaaaaaa";
@@ -100,7 +100,7 @@ describe("Jobs", () => {
     });
 
     describe("TPS.job.cancel()", () => {
-        it("Should return an array of jobs in a group", done => {
+        it("Should cancel the job", done => {
             tps.job
                 .create({
                     group_id: GROUP_ID,

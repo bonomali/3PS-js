@@ -19,15 +19,11 @@ var Component = function() {};
  *
  * @returns {Array}
  */
-Component.prototype.getHeaders = function(files = null) {
+Component.prototype.getHeaders = function(extra = {}) {
     var headers = {};
-    if (files) {
-        headers["Content-Type"] = "multipart/form-data";
-    }
-    if (this.apiToken) headers["X-Api-Token"] = this.apiToken;
-    if (this.accessToken)
-        headers["Authorization"] = "Bearer " + this.accessToken;
-    return headers;
+    if (this.apiKey) headers["X-Api-Token"] = this.apiKey;
+    if (this.accessToken) headers["Authorization"] = "Bearer " + this.accessToken;
+    return Object.assign(extra, headers);
 };
 
 // -----------------------------------------------------
@@ -80,16 +76,22 @@ Component.prototype.search = function(query, opts = {}) {
 /**
  * /components/create
  *
- * @param {Object} component Options
+ * @param {FormData} component Options
  *   @param {String} [component.user_id]
  *   @param {String} [component.group_id]
  * @returns {Promise}
  */
 Component.prototype.create = function(component) {
+
+    var extraHeaders = {}
+    if(typeof component.getHeaders === 'function') {
+        extraHeaders = component.getHeaders()
+    }
+
     return new Promise((resolve, reject) => {
         axios
             .post(`${this.hostname}/components/create`, component, {
-                headers: this.getHeaders()
+                headers: this.getHeaders(extraHeaders)
             })
             .then(({ data }) => resolve(data))
             .catch(err => reject(err));
@@ -128,7 +130,7 @@ Component.prototype.get = function(componentID) {
     return new Promise((resolve, reject) => {
         axios
             .get(`${this.hostname}/components/${componentID}`, {
-                headers: this.getHeaders("files")
+                headers: this.getHeaders()
             })
             .then(({ data }) => resolve(data))
             .catch(err => reject(err));
@@ -185,10 +187,17 @@ Component.prototype.download = function(componentID, versionID) {
  * @returns {Promise}
  */
 Component.prototype.updateStl = function(componentID, formData) {
+
+    var extraHeaders = {}
+    if(typeof formData.getHeaders === 'function') {
+        extraHeaders = formData.getHeaders()
+    }
+
+
     return new Promise((resolve, reject) => {
         axios
             .post(`${this.hostname}/components/${componentID}/stl/`, formData, {
-                headers: this.getHeaders("files")
+                headers: this.getHeaders(extraHeaders),
             })
             .then(({ data }) => resolve(data))
             .catch(err => reject(err));
@@ -211,7 +220,7 @@ Component.prototype.deleteVersion = function(componentID, versionID) {
                 }/components/${componentID}/stl/${versionID}/delete`,
                 {
                     headers: this.getHeaders()
-                }
+                } 
             )
             .then(({ data }) => resolve(data))
             .catch(err => reject(err));

@@ -1,9 +1,9 @@
 const axios = require("axios");
 
-const Address = require("./Address");
-const Component = require("./Component");
-const Obj = require("./Object");
-const Job = require("./Job");
+const Addresses = require("./Addresses");
+const Components = require("./Components");
+const Objects = require("./Objects");
+const Jobs = require("./Jobs");
 
 /**
  * TPS
@@ -13,7 +13,7 @@ const Job = require("./Job");
  *   @param {String} [opts.hostname]
  *   @param {String} [opts.accessToken]
  */
-var TPS = function(apiKey, opts = {}) {
+var TPS = function (apiKey, opts = {}) {
     Object.assign(
         this,
         {
@@ -31,10 +31,10 @@ var TPS = function(apiKey, opts = {}) {
         apiKey: this.apiKey,
     }
 
-    this.address = Object.assign(new Address, base);
-    this.component = Object.assign(new Component, base);
-    this.object = Object.assign(new Obj, base);
-    this.job = Object.assign(new Job, base);
+    this.addresses = Object.assign(new Addresses, base);
+    this.components = Object.assign(new Components, base);
+    this.objects = Object.assign(new Objects, base);
+    this.jobs = Object.assign(new Jobs, base);
 };
 
 /**
@@ -42,22 +42,12 @@ var TPS = function(apiKey, opts = {}) {
  *
  * @returns {Array}
  */
-TPS.prototype.getHeaders = function() {
+TPS.prototype.getHeaders = function () {
     var headers = {};
-    if (this.apiToken) headers["X-Api-Token"] = this.apiToken;
+    if (this.apiKey) headers["X-Api-Token"] = this.apiKey;
     if (this.accessToken)
         headers["Authorization"] = "Bearer " + this.accessToken;
     return headers;
-};
-
-/**
- * Alias of TPS.jobs.create()
- *
- * @param {Object} job
- * @returns {Promise}
- */
-TPS.prototype.print = function(job) {
-    return this.jobs.create(job);
 };
 
 /**
@@ -66,7 +56,7 @@ TPS.prototype.print = function(job) {
  * @param {String} searchQuery
  * @returns {Promise}
  */
-TPS.prototype.search = function(query) {
+TPS.prototype.search = function (query) {
     return new Promise((resolve, reject) => {
         axios
             .get(`${this.hostname}/search/${query}`, {

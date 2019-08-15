@@ -31,7 +31,7 @@ var Obj = function(apiKey, opts = {}) {
  */
 Obj.prototype.getHeaders = function() {
     var headers = {};
-    if (this.apiToken) headers["X-Api-Token"] = this.apiToken;
+    if (this.apiKey) headers["X-Api-Token"] = this.apiKey;
     if (this.accessToken)
         headers["Authorization"] = "Bearer " + this.accessToken;
     return headers;

@@ -1,6 +1,7 @@
 var { assert } = require("chai");
 const fs = require("fs");
-const tps = require("./tps");
+const tps = require("./config/tps");
+var FormData = require('form-data');
 
 const GROUP_ID = "2f8fdea3-b875-4926-90c8-5a1b11b818c8";
 const DOWNLOAD_COMPONENT_ID = "f16f83ca-31f1-49d0-add5-016cb251f3a5";
@@ -62,10 +63,10 @@ describe("Components", () => {
         it("Should create new component", done => {
             let component = {
                 name: 'Dice',
-                is_public: false,
+                is_public: 'false',
                 group_id: GROUP_ID,
 
-                stl: fs.readFileSync('./tests/config/dice.stl'),
+                stl: fs.createReadStream('./tests/config/dice.stl'),
 
                 material: 'PLA',
                 process: 'FDM',
@@ -74,8 +75,11 @@ describe("Components", () => {
                 color: 'Red',
             };
 
+            var formData = new FormData();
+            Object.keys(component).map(key => formData.append(key, component[key]))
+
             tps.component
-                .create(component)
+                .create(formData)
                 .then(response => {
                     assert.isObject(response);
                     assert.equal(response.status, "ok");
@@ -106,7 +110,7 @@ describe("Components", () => {
                     ]);
                     done();
                 })
-                .catch(err => done(err));
+                .catch(err => done(err.response));
         });
     });
 
@@ -182,6 +186,56 @@ describe("Components", () => {
                         "url",
                     ]);
                     done();
+                })
+                .catch(err => done(err));
+        });
+    });
+
+
+    // updateSTL
+    // deleteVersion
+
+
+    describe("TPS.component.delete()", () => {
+        it("Should delete component", done => {
+            let component = {
+                name: 'Dice',
+                is_public: 'false',
+                group_id: GROUP_ID,
+
+                stl: fs.readFileSync('./tests/config/dice.stl'),
+
+                material: 'PLA',
+                process: 'FDM',
+                resolution: '200',
+                infill: '20',
+                color: 'Red',
+            };
+
+            var formData = new FormData();
+            Object.keys(component).map(key => formData.append(key, component[key]))
+
+            tps.component
+                .create(formData)
+                .then(createResponse => {
+                    assert.isObject(createResponse);
+                    assert.equal(createResponse.status, "ok");
+
+                    // Test
+                    tps.component
+                        .delete(createResponse.data.id)
+                        .then(response => {
+                            assert.isObject(response);
+                            assert.equal(response.status, "ok");
+
+                            assert.containsAllKeys(response.data, [
+                                "id",
+                            ]);
+
+                            done()
+                        })
+                        .catch(err => done(err));
+
                 })
                 .catch(err => done(err));
         });

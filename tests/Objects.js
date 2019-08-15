@@ -1,6 +1,6 @@
 var { assert } = require("chai");
 const fs = require("fs");
-const tps = require("./tps");
+const tps = require("./config/tps");
 
 const GROUP_ID = "2f8fdea3-b875-4926-90c8-5a1b11b818c8";
 const OBJECT_ID = "6c85b4fd-c689-4dd8-a6ba-f3280417b011";
@@ -60,14 +60,11 @@ describe("Objects", () => {
                 group_id: GROUP_ID,
                 name: "Test Object",
                 is_public: false,
-                image: fs.readFileSync("./tests/thumbnail.jpg"),
+                image: fs.readFileSync("./tests/config/thumbnail.jpg"),
                 components: [
                     {
                         id: "f16f83ca-31f1-49d0-add5-016cb251f3a5"
                     },
-                    {
-                        id: "84a4ce43-f145-45a6-8260-b96fc109fd85"
-                    }
                 ]
             };
 
