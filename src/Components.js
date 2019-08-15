@@ -8,7 +8,7 @@ const axios = require("axios");
  *   @param {String} [opts.hostname]
  *   @param {String} [opts.accessToken]
  */
-var Component = function() {};
+var Component = function () { };
 
 // -----------------------------------------------------
 // Misc
@@ -19,7 +19,7 @@ var Component = function() {};
  *
  * @returns {Array}
  */
-Component.prototype.getHeaders = function(extra = {}) {
+Component.prototype.getHeaders = function (extra = {}) {
     var headers = {};
     if (this.apiKey) headers["X-Api-Token"] = this.apiKey;
     if (this.accessToken) headers["Authorization"] = "Bearer " + this.accessToken;
@@ -37,7 +37,7 @@ Component.prototype.getHeaders = function(extra = {}) {
  *   @param {String} [opts.page]
  * @returns {Promise}
  */
-Component.prototype.latest = function(opts = {}) {
+Component.prototype.latest = function (opts = {}) {
     return new Promise((resolve, reject) => {
         axios
             .get(`${this.hostname}/components`, {
@@ -59,7 +59,7 @@ Component.prototype.latest = function(opts = {}) {
  *   @param {String} [opts.page]
  * @returns {Promise}
  */
-Component.prototype.search = function(query, opts = {}) {
+Component.prototype.search = function (query, opts = {}) {
     return new Promise((resolve, reject) => {
         axios
             .get(`${this.hostname}/components/search/${query}`, {
@@ -81,10 +81,10 @@ Component.prototype.search = function(query, opts = {}) {
  *   @param {String} [component.group_id]
  * @returns {Promise}
  */
-Component.prototype.create = function(component) {
+Component.prototype.create = function (component) {
 
     var extraHeaders = {}
-    if(typeof component.getHeaders === 'function') {
+    if (typeof component.getHeaders === 'function') {
         extraHeaders = component.getHeaders()
     }
 
@@ -106,7 +106,7 @@ Component.prototype.create = function(component) {
  *   @param {String} [opts.page]
  * @returns {Promise}
  */
-Component.prototype.getByGroupID = function(groupID, opts = {}) {
+Component.prototype.getByGroupID = function (groupID, opts = {}) {
     return new Promise((resolve, reject) => {
         axios
             .get(`${this.hostname}/components/group/${groupID}`, {
@@ -126,7 +126,7 @@ Component.prototype.getByGroupID = function(groupID, opts = {}) {
  * @param {String} componentID
  * @returns {Promise}
  */
-Component.prototype.get = function(componentID) {
+Component.prototype.get = function (componentID) {
     return new Promise((resolve, reject) => {
         axios
             .get(`${this.hostname}/components/${componentID}`, {
@@ -146,7 +146,7 @@ Component.prototype.get = function(componentID) {
  *   @param {String} [component.group_id]
  * @returns {Promise}
  */
-Component.prototype.update = function(componentID, component) {
+Component.prototype.update = function (componentID, component) {
     return new Promise((resolve, reject) => {
         axios
             .post(`${this.hostname}/components/${componentID}`, component, {
@@ -158,18 +158,18 @@ Component.prototype.update = function(componentID, component) {
 };
 
 /**
- * GET /components/:component_id/download/:version_id
+ * GET /components/:component_id/download/:stl_id
  *
  * @param {String} componentID
  * @returns {Promise}
  */
-Component.prototype.download = function(componentID, versionID) {
+Component.prototype.downloadSTL = function (componentID, stlID) {
     return new Promise((resolve, reject) => {
         axios
             .get(
                 `${
-                    this.hostname
-                }/components/${componentID}/download/${versionID}`,
+                this.hostname
+                }/components/${componentID}/download/${stlID}`,
                 {
                     headers: this.getHeaders()
                 }
@@ -186,10 +186,10 @@ Component.prototype.download = function(componentID, versionID) {
  * @param {FormData} formData
  * @returns {Promise}
  */
-Component.prototype.updateStl = function(componentID, formData) {
+Component.prototype.newSTL = function (componentID, formData) {
 
     var extraHeaders = {}
-    if(typeof formData.getHeaders === 'function') {
+    if (typeof formData.getHeaders === 'function') {
         extraHeaders = formData.getHeaders()
     }
 
@@ -208,19 +208,16 @@ Component.prototype.updateStl = function(componentID, formData) {
  * DEL /components/{component_id}/stl/{version_id}/delete
  *
  * @param {String} componentID
- * @param {String} versionID
+ * @param {String} stlID
  * @returns {Promise}
  */
-Component.prototype.deleteVersion = function(componentID, versionID) {
+Component.prototype.deleteSTL = function (componentID, stlID) {
     return new Promise((resolve, reject) => {
         axios
-            .delete(
-                `${
-                    this.hostname
-                }/components/${componentID}/stl/${versionID}/delete`,
+            .delete(`${this.hostname}/components/${componentID}/stl/${stlID}/delete`,
                 {
                     headers: this.getHeaders()
-                } 
+                }
             )
             .then(({ data }) => resolve(data))
             .catch(err => reject(err));
@@ -233,7 +230,7 @@ Component.prototype.deleteVersion = function(componentID, versionID) {
  * @param {String} componentID
  * @returns {Promise}
  */
-Component.prototype.delete = function(componentID) {
+Component.prototype.delete = function (componentID) {
     return new Promise((resolve, reject) => {
         axios
             .delete(`${this.hostname}/components/${componentID}/delete`, {
@@ -251,7 +248,7 @@ Component.prototype.delete = function(componentID) {
  * @param {String} userId
  * @returns {Promise}
  */
-Component.prototype.star = function(componentID) {
+Component.prototype.star = function (componentID) {
     return new Promise((resolve, reject) => {
         axios
             .post(
@@ -272,7 +269,7 @@ Component.prototype.star = function(componentID) {
  * @param {String} componentID
  * @returns {Promise}
  */
-Component.prototype.unStar = function(componentID) {
+Component.prototype.unStar = function (componentID) {
     return new Promise((resolve, reject) => {
         axios
             .delete(`${this.hostname}/components/${componentID}/un-star`, {
@@ -290,7 +287,7 @@ Component.prototype.unStar = function(componentID) {
  * @param {String} tag
  * @returns {Promise}
  */
-Component.prototype.addTag = function(componentID, tag) {
+Component.prototype.addTag = function (componentID, tag) {
     return new Promise((resolve, reject) => {
         axios
             .post(
@@ -312,12 +309,12 @@ Component.prototype.addTag = function(componentID, tag) {
  * @param {String} tagID
  * @returns {Promise}
  */
-Component.prototype.removeTag = function(componentID, tagID) {
+Component.prototype.removeTag = function (componentID, tagID) {
     return new Promise((resolve, reject) => {
         axios
             .delete(
                 `${
-                    this.hostname
+                this.hostname
                 }/components/${componentID}/remove-tag/${tagID}`,
                 {
                     headers: this.getHeaders()

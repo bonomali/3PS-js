@@ -10,9 +10,9 @@ const COMPONENT_ID = "00000000-0000-0000-0000-000000000000";
 
 
 describe("Components", () => {
-    describe("TPS.component.latest()", () => {
+    describe("TPS.components.latest()", () => {
         it("Should return latest components", done => {
-            tps.component
+            tps.components
                 .latest()
                 .then(response => {
                     assert.isObject(response);
@@ -44,9 +44,9 @@ describe("Components", () => {
         });
     });
 
-    describe("TPS.component.search()", () => {
+    describe("TPS.components.search()", () => {
         it("Should return search results", done => {
-            tps.component
+            tps.components
                 .search("foo")
                 .then(response => {
                     assert.isObject(response);
@@ -59,7 +59,7 @@ describe("Components", () => {
         });
     });
 
-    describe("TPS.component.create()", () => {
+    describe("TPS.components.create()", () => {
         it("Should create new component", done => {
             let component = {
                 name: 'Dice',
@@ -78,7 +78,7 @@ describe("Components", () => {
             var formData = new FormData();
             Object.keys(component).map(key => formData.append(key, component[key]))
 
-            tps.component
+            tps.components
                 .create(formData)
                 .then(response => {
                     assert.isObject(response);
@@ -114,9 +114,9 @@ describe("Components", () => {
         });
     });
 
-    describe("TPS.component.getByGroupID()", () => {
+    describe("TPS.components.getByGroupID()", () => {
         it("Should return group objects", done => {
-            tps.component
+            tps.components
                 .getByGroupID(GROUP_ID)
                 .then(response => {
                     assert.isObject(response);
@@ -129,9 +129,9 @@ describe("Components", () => {
         });
     });
 
-    describe("TPS.component.get()", () => {
+    describe("TPS.components.get()", () => {
         it("Should return the component", done => {
-            tps.component
+            tps.components
                 .get(COMPONENT_ID)
                 .then(response => {
                     assert.isObject(response);
@@ -152,14 +152,14 @@ describe("Components", () => {
         });
     });
 
-    describe("TPS.component.update()", () => {
+    describe("TPS.components.update()", () => {
         it("Should update the component", done => {
             let update = {
                 name: "NEW NAME",
                 description: "NEW DESCRIPTION"
             };
 
-            tps.component
+            tps.components
                 .update(COMPONENT_ID, update)
                 .then(response => {
                     assert.isObject(response);
@@ -173,11 +173,11 @@ describe("Components", () => {
         });
     });
 
-    describe("TPS.component.download()", () => {
+    describe("TPS.components.downloadSTL()", () => {
         it("Should return download url", done => {
 
-            tps.component
-                .download(DOWNLOAD_COMPONENT_ID, VERSION_ID)
+            tps.components
+                .downloadSTL(DOWNLOAD_COMPONENT_ID, VERSION_ID)
                 .then(response => {
                     assert.isObject(response);
                     assert.equal(response.status, "ok");
@@ -196,7 +196,7 @@ describe("Components", () => {
     // deleteVersion
 
 
-    describe("TPS.component.delete()", () => {
+    describe("TPS.components.delete()", () => {
         it("Should delete component", done => {
             let component = {
                 name: 'Dice',
@@ -215,14 +215,14 @@ describe("Components", () => {
             var formData = new FormData();
             Object.keys(component).map(key => formData.append(key, component[key]))
 
-            tps.component
+            tps.components
                 .create(formData)
                 .then(createResponse => {
                     assert.isObject(createResponse);
                     assert.equal(createResponse.status, "ok");
 
                     // Test
-                    tps.component
+                    tps.components
                         .delete(createResponse.data.id)
                         .then(response => {
                             assert.isObject(response);
@@ -241,9 +241,9 @@ describe("Components", () => {
         });
     });
 
-    describe("TPS.component.star()", () => {
+    describe("TPS.components.star()", () => {
         it("Should star component", done => {
-            tps.component
+            tps.components
                 .star(COMPONENT_ID)
                 .then(response => {
                     assert.isObject(response);
@@ -256,9 +256,9 @@ describe("Components", () => {
         });
     });
 
-    describe("TPS.component.unStar()", () => {
+    describe("TPS.components.unStar()", () => {
         it("Should un-star component", done => {
-            tps.component
+            tps.components
                 .unStar(COMPONENT_ID)
                 .then(response => {
                     assert.isObject(response);
@@ -271,9 +271,9 @@ describe("Components", () => {
         });
     });
 
-    describe("TPS.component.addTag()", () => {
+    describe("TPS.components.addTag()", () => {
         it("Should add tag the component", done => {
-            tps.component
+            tps.components
                 .addTag(COMPONENT_ID, "foo")
                 .then(response => {
                     assert.isObject(response);
@@ -287,16 +287,16 @@ describe("Components", () => {
         });
     });
 
-    describe("TPS.component.removeTag()", () => {
+    describe("TPS.components.removeTag()", () => {
         it("Should remove tag from the component", done => {
-            tps.component
+            tps.components
                 .addTag(COMPONENT_ID, "foo")
                 .then(addTagResponse => {
                     assert.isObject(addTagResponse);
                     assert.equal(addTagResponse.status, "ok");
 
                     // Test
-                    tps.component
+                    tps.components
                         .removeTag(COMPONENT_ID, addTagResponse.data.id)
                         .then(response => {
                             assert.isObject(response);
