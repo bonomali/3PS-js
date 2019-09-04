@@ -52,6 +52,27 @@ Component.prototype.latest = function (opts = {}) {
 };
 
 /**
+ * GET /components/starred
+ *
+ * @param {Object} opts
+ *   @param {String} [opts.page]
+ * @returns {Promise}
+ */
+Component.prototype.starred = function (opts = {}) {
+    return new Promise((resolve, reject) => {
+        axios
+            .get(`${this.hostname}/components/starred`, {
+                headers: this.getHeaders(),
+                params: {
+                    page: opts.page || 1
+                }
+            })
+            .then(({ data }) => resolve(data))
+            .catch(err => reject(err));
+    });
+};
+
+/**
  * GET /components/search/{query}
  *
  * @param {String} query
@@ -205,7 +226,7 @@ Component.prototype.newSTL = function (componentID, formData) {
 };
 
 /**
- * DEL /components/{component_id}/stl/{version_id}/delete
+ * DEL /components/{component_id}/stl/{stl_id}/delete
  *
  * @param {String} componentID
  * @param {String} stlID
@@ -219,6 +240,28 @@ Component.prototype.deleteSTL = function (componentID, stlID) {
                     headers: this.getHeaders()
                 }
             )
+            .then(({ data }) => resolve(data))
+            .catch(err => reject(err));
+    });
+};
+
+/**
+ * POST /components/{component_id}/stl/{stl_id}/estimate
+ *
+ * @param {String} componentID
+ * @param {String} stlID
+ * @param {Object} estimate
+ * @param {String} estimate.scale
+ * @param {String} estimate.resolution
+ * @param {String} estimate.infill
+ * @returns {Promise}
+ */
+Component.prototype.estimateSTL = function (componentID, stlID, estimate) {
+    return new Promise((resolve, reject) => {
+        axios
+            .post(`${this.hostname}/components/${componentID}/stl/${stlID}/estimate`, estimate, {
+                headers: this.getHeaders(),
+            })
             .then(({ data }) => resolve(data))
             .catch(err => reject(err));
     });

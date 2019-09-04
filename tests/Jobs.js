@@ -134,10 +134,10 @@ describe("Jobs", () => {
     // Events
     // -----------------------------------------------------
 
-    describe("TPS.job.getJobEvents()", () => {
+    describe("TPS.job.getEvents()", () => {
         it("Should return an array of jobs in a group", done => {
             tps.job
-                .getJobEvents(JOB_ID)
+                .getEvents(JOB_ID)
                 .then(response => {
                     assert.isObject(response);
                     assert.equal(response.status, "ok");

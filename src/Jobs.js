@@ -8,7 +8,7 @@ const axios = require("axios");
  *   @param {String} [opts.hostname]
  *   @param {String} [opts.accessToken]
  */
-var Job = function() {};
+var Job = function () { };
 
 // -----------------------------------------------------
 // Misc
@@ -19,7 +19,7 @@ var Job = function() {};
  *
  * @returns {Array}
  */
-Job.prototype.getHeaders = function() {
+Job.prototype.getHeaders = function () {
     var headers = {};
     if (this.apiKey) headers["X-Api-Token"] = this.apiKey;
     if (this.accessToken)
@@ -38,7 +38,7 @@ Job.prototype.getHeaders = function() {
  *   @param {String} [component.user_id]
  * @returns {Promise}
  */
-Job.prototype.create = function(job) {
+Job.prototype.create = function (job) {
     return new Promise((resolve, reject) => {
         axios
             .post(`${this.hostname}/jobs/create`, job, {
@@ -55,7 +55,7 @@ Job.prototype.create = function(job) {
  * @param {String} groupID
  * @returns {Promise}
  */
-Job.prototype.getByGroupID = function(groupID) {
+Job.prototype.getByGroupID = function (groupID) {
     return new Promise((resolve, reject) => {
         axios
             .get(`${this.hostname}/jobs/group/${groupID}`, {
@@ -72,7 +72,7 @@ Job.prototype.getByGroupID = function(groupID) {
  * @param {String} jobID
  * @returns {Promise}
  */
-Job.prototype.get = function(jobID) {
+Job.prototype.get = function (jobID) {
     return new Promise((resolve, reject) => {
         axios
             .get(`${this.hostname}/jobs/${jobID}`, {
@@ -89,7 +89,7 @@ Job.prototype.get = function(jobID) {
  * @param {String} jobID
  * @returns {Promise}
  */
-Job.prototype.cancel = function(jobID) {
+Job.prototype.cancel = function (jobID) {
     return new Promise((resolve, reject) => {
         axios
             .delete(`${this.hostname}/jobs/${jobID}/cancel`, {
@@ -116,7 +116,7 @@ Job.prototype.cancel = function(jobID) {
  *   @param {String} [demoPrint.delivery_instructions]
  * @returns {Promise}
  */
-Job.prototype.demoPrint = function(demoPrint) {
+Job.prototype.demoPrint = function (demoPrint) {
     return new Promise((resolve, reject) => {
         axios
             .post(`${this.hostname}/jobs/demo-print`, demoPrint, {
@@ -137,7 +137,7 @@ Job.prototype.demoPrint = function(demoPrint) {
  * @param {String} jobID
  * @returns {Promise}
  */
-Job.prototype.getJobEvents = function(jobID) {
+Job.prototype.getEvents = function (jobID) {
     return new Promise((resolve, reject) => {
         axios
             .get(`${this.hostname}/jobs/${jobID}/events`, {
@@ -155,7 +155,7 @@ Job.prototype.getJobEvents = function(jobID) {
  * @param {Object} event
  * @returns {Promise}
  */
-Job.prototype.createJobEvent = function(jobID, event) {
+Job.prototype.createJobEvent = function (jobID, event) {
     return new Promise((resolve, reject) => {
         axios
             .post(`${this.hostname}/jobs/${jobID}/events/create`, event, {

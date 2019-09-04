@@ -8,7 +8,7 @@ const axios = require("axios");
  *   @param {String} [opts.hostname]
  *   @param {String} [opts.accessToken]
  */
-var Obj = function(apiKey, opts = {}) {
+var Obj = function (apiKey, opts = {}) {
     Object.assign(
         this,
         {
@@ -29,7 +29,7 @@ var Obj = function(apiKey, opts = {}) {
  *
  * @returns {Array}
  */
-Obj.prototype.getHeaders = function() {
+Obj.prototype.getHeaders = function () {
     var headers = {};
     if (this.apiKey) headers["X-Api-Token"] = this.apiKey;
     if (this.accessToken)
@@ -48,10 +48,31 @@ Obj.prototype.getHeaders = function() {
  *   @param {String} [opts.page]
  * @returns {Promise}
  */
-Obj.prototype.latest = function(opts = {}) {
+Obj.prototype.latest = function (opts = {}) {
     return new Promise((resolve, reject) => {
         axios
             .get(`${this.hostname}/objects`, {
+                headers: this.getHeaders(),
+                params: {
+                    page: opts.page || 1
+                }
+            })
+            .then(({ data }) => resolve(data))
+            .catch(err => reject(err));
+    });
+};
+
+/**
+ * GET /objects/starred
+ *
+ * @param {Object} opts
+ *   @param {String} [opts.page]
+ * @returns {Promise}
+ */
+Obj.prototype.starred = function (opts = {}) {
+    return new Promise((resolve, reject) => {
+        axios
+            .get(`${this.hostname}/objects/starred`, {
                 headers: this.getHeaders(),
                 params: {
                     page: opts.page || 1
@@ -70,7 +91,7 @@ Obj.prototype.latest = function(opts = {}) {
  *   @param {String} [opts.page]
  * @returns {Promise}
  */
-Obj.prototype.search = function(query, opts = {}) {
+Obj.prototype.search = function (query, opts = {}) {
     return new Promise((resolve, reject) => {
         axios
             .get(`${this.hostname}/objects/search/${query}`, {
@@ -92,7 +113,7 @@ Obj.prototype.search = function(query, opts = {}) {
  *   @param {String} [object.group_id]
  * @returns {Promise}
  */
-Obj.prototype.create = function(object) {
+Obj.prototype.create = function (object) {
     return new Promise((resolve, reject) => {
         axios
             .post(`${this.hostname}/objects/create`, object, {
@@ -112,7 +133,7 @@ Obj.prototype.create = function(object) {
  *   @param {String} [opts.page]
  * @returns {Promise}
  */
-Obj.prototype.getByGroupID = function(groupID, opts = {}) {
+Obj.prototype.getByGroupID = function (groupID, opts = {}) {
     return new Promise((resolve, reject) => {
         axios
             .get(`${this.hostname}/objects/group/${groupID}`, {
@@ -132,11 +153,14 @@ Obj.prototype.getByGroupID = function(groupID, opts = {}) {
  * @param {String} objectID
  * @returns {Promise}
  */
-Obj.prototype.get = function(objectID) {
+Obj.prototype.get = function (objectID, opts) {
     return new Promise((resolve, reject) => {
         axios
             .get(`${this.hostname}/objects/${objectID}`, {
-                headers: this.getHeaders()
+                headers: this.getHeaders(),
+                params: {
+                    with: opts.with || null
+                }
             })
             .then(({ data }) => resolve(data))
             .catch(err => reject(err));
@@ -152,7 +176,7 @@ Obj.prototype.get = function(objectID) {
  *   @param {String} [object.group_id]
  * @returns {Promise}
  */
-Obj.prototype.update = function(objectID, object) {
+Obj.prototype.update = function (objectID, object) {
     return new Promise((resolve, reject) => {
         axios
             .post(`${this.hostname}/objects/${objectID}`, object, {
@@ -169,7 +193,7 @@ Obj.prototype.update = function(objectID, object) {
  * @param {String} objectID
  * @returns {Promise}
  */
-Obj.prototype.delete = function(objectID) {
+Obj.prototype.delete = function (objectID) {
     return new Promise((resolve, reject) => {
         axios
             .delete(`${this.hostname}/objects/${objectID}/delete`, {
@@ -186,7 +210,7 @@ Obj.prototype.delete = function(objectID) {
  * @param {String} objectID
  * @returns {Promise}
  */
-Obj.prototype.star = function(objectID) {
+Obj.prototype.star = function (objectID) {
     return new Promise((resolve, reject) => {
         axios
             .post(
@@ -207,7 +231,7 @@ Obj.prototype.star = function(objectID) {
  * @param {String} objectID
  * @returns {Promise}
  */
-Obj.prototype.unStar = function(objectID) {
+Obj.prototype.unStar = function (objectID) {
     return new Promise((resolve, reject) => {
         axios
             .delete(`${this.hostname}/objects/${objectID}/un-star`, {
@@ -225,7 +249,7 @@ Obj.prototype.unStar = function(objectID) {
  * @param {String} tag
  * @returns {Promise}
  */
-Obj.prototype.addTag = function(objectID, tag) {
+Obj.prototype.addTag = function (objectID, tag) {
     return new Promise((resolve, reject) => {
         axios
             .post(
@@ -247,7 +271,7 @@ Obj.prototype.addTag = function(objectID, tag) {
  * @param {String} tagID
  * @returns {Promise}
  */
-Obj.prototype.removeTag = function(objectID, tagID) {
+Obj.prototype.removeTag = function (objectID, tagID) {
     return new Promise((resolve, reject) => {
         axios
             .delete(
