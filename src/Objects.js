@@ -111,6 +111,8 @@ Obj.prototype.search = function (query, opts = {}) {
  * @param {Object} object Options
  *   @param {String} [object.user_id]
  *   @param {String} [object.group_id]
+ *   @param {String} [object.is_public]
+ *   @param {File} [object.image]
  * @returns {Promise}
  */
 Obj.prototype.create = function (object) {
@@ -180,6 +182,78 @@ Obj.prototype.update = function (objectID, object) {
     return new Promise((resolve, reject) => {
         axios
             .post(`${this.hostname}/objects/${objectID}`, object, {
+                headers: this.getHeaders()
+            })
+            .then(({ data }) => resolve(data))
+            .catch(err => reject(err));
+    });
+};
+
+/**
+ * POST /objects/:object_id/add-component
+ *
+ * @param {String} objectID
+ * @param {Object} component
+ *   @param {String} [component.id]
+ *   @param {String} [component.stl_id]
+ *   @param {String} [component.resolution]
+ *   @param {String} [component.material]
+ *   @param {String} [component.color]
+ *   @param {String} [component.process]
+ *   @param {String} [component.infill]
+ *   @param {String} [component.scale]
+ *   @param {String} [component.count]
+ * @returns {Promise}
+ */
+Obj.prototype.addComponent = function (objectID, component) {
+    return new Promise((resolve, reject) => {
+        axios
+            .post(`${this.hostname}/objects/${objectID}/add-component`, component, {
+                headers: this.getHeaders()
+            })
+            .then(({ data }) => resolve(data))
+            .catch(err => reject(err));
+    });
+};
+
+/**
+ * POST /objects/:object_id/edit-component/:component_object_id
+ *
+ * @param {String} objectID
+ * @param {String} componentObjectID
+ * @param {Object} component
+ *   @param {String} [component.stl_id]
+ *   @param {String} [component.resolution]
+ *   @param {String} [component.material]
+ *   @param {String} [component.color]
+ *   @param {String} [component.process]
+ *   @param {String} [component.infill]
+ *   @param {String} [component.scale]
+ *   @param {String} [component.count]
+ * @returns {Promise}
+ */
+Obj.prototype.editComponent = function (objectID, componentObjectID, component) {
+    return new Promise((resolve, reject) => {
+        axios
+            .post(`${this.hostname}/objects/${objectID}/edit-component/${componentObjectID}`, component, {
+                headers: this.getHeaders()
+            })
+            .then(({ data }) => resolve(data))
+            .catch(err => reject(err));
+    });
+};
+
+/**
+ * DEL /objects/:object_id/delete-component/:component_object_id
+ *
+ * @param {String} objectID
+ * @param {String} componentObjectID
+ * @returns {Promise}
+ */
+Obj.prototype.deleteComponent = function (objectID, componentObjectID) {
+    return new Promise((resolve, reject) => {
+        axios
+            .delete(`${this.hostname}/objects/${objectID}/delete-component/${componentObjectID}`, {
                 headers: this.getHeaders()
             })
             .then(({ data }) => resolve(data))
