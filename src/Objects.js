@@ -196,10 +196,9 @@ Obj.prototype.update = function (objectID, object) {
  * @param {Object} component
  *   @param {String} [component.id]
  *   @param {String} [component.stl_id]
- *   @param {String} [component.resolution]
+ *   @param {String} [component.machine]
  *   @param {String} [component.material]
- *   @param {String} [component.color]
- *   @param {String} [component.process]
+ *   @param {String} [component.layer_height]
  *   @param {String} [component.infill]
  *   @param {String} [component.scale]
  *   @param {String} [component.count]
@@ -223,10 +222,9 @@ Obj.prototype.addComponent = function (objectID, component) {
  * @param {String} componentObjectID
  * @param {Object} component
  *   @param {String} [component.stl_id]
- *   @param {String} [component.resolution]
+ *   @param {String} [component.machine]
  *   @param {String} [component.material]
- *   @param {String} [component.color]
- *   @param {String} [component.process]
+ *   @param {String} [component.layer_height]
  *   @param {String} [component.infill]
  *   @param {String} [component.scale]
  *   @param {String} [component.count]

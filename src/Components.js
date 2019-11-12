@@ -251,9 +251,9 @@ Component.prototype.deleteSTL = function (componentID, stlID) {
  * @param {String} componentID
  * @param {String} stlID
  * @param {Object} estimate
- * @param {String} estimate.scale
- * @param {String} estimate.resolution
- * @param {String} estimate.infill
+ *  @param {String} [estimate.scale]
+ *  @param {String} [estimate.layer_height]
+ *  @param {String} [estimate.infill]
  * @returns {Promise}
  */
 Component.prototype.estimateSTL = function (componentID, stlID, estimate) {
