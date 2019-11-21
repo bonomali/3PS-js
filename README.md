@@ -35,11 +35,11 @@ var component = {
 	stl: fs.readFileSync('./dice.stl'),
 
 	// Default Print Settings
-	material: 'PLA',
-	process: 'FDM',
-	resolution: '200',
-	infill: '20',
-	color: 'Red',
+	machine: 'ender-3',
+	material: 'pla-red',
+	resolution: 200,
+	infill: 20,
+	scale: 1,
 }
 
 
@@ -49,7 +49,6 @@ tps.components.create(component).then(function(newComponent) {
 	// Print Component
 	tps.jobs.create({
 		group_id: '00ffedbb-ff29-5138-9b5d-cd1f6ae3bc6b',
-		fulfillment_type: 'standard',
 		components: [{
 			id: newComponent.id
 		}]
@@ -76,11 +75,11 @@ tps.components.create({
 	stl: fs.readFileSync('./dice.stl'),
 
 	// Default Print Settings
-	material: 'PLA',
-	process: 'FDM',
-	resolution: '200',
+	machine: 'ender-3',
+	material: 'pla-red',
+	layer_height: '200',
 	infill: '20',
-	color: 'Red',
+    scale: 1,
 }).then((component) => {
 
 	console.log(component)

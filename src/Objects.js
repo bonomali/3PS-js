@@ -3,43 +3,9 @@ const axios = require("axios");
 /**
  * Obj
  *
- * @param {String} apiKey
- * @param {Object} opts options
- *   @param {String} [opts.hostname]
- *   @param {String} [opts.accessToken]
  */
-var Obj = function (apiKey, opts = {}) {
-    Object.assign(
-        this,
-        {
-            hostname: "https://api.ideea.co.uk/api/v1",
-            accessToken: false,
-            apiKey: apiKey
-        },
-        opts
-    );
-};
+var Obj = function () { };
 
-// -----------------------------------------------------
-// Misc
-// -----------------------------------------------------
-
-/**
- * .getHeaders()
- *
- * @returns {Array}
- */
-Obj.prototype.getHeaders = function () {
-    var headers = {};
-    if (this.apiKey) headers["X-Api-Token"] = this.apiKey;
-    if (this.accessToken)
-        headers["Authorization"] = "Bearer " + this.accessToken;
-    return headers;
-};
-
-// -----------------------------------------------------
-// OBJECTS
-// -----------------------------------------------------
 
 /**
  * GET /objects
@@ -62,6 +28,7 @@ Obj.prototype.latest = function (opts = {}) {
     });
 };
 
+
 /**
  * GET /objects/starred
  *
@@ -82,6 +49,7 @@ Obj.prototype.starred = function (opts = {}) {
             .catch(err => reject(err));
     });
 };
+
 
 /**
  * GET /objects/search/{query}
@@ -105,6 +73,7 @@ Obj.prototype.search = function (query, opts = {}) {
     });
 };
 
+
 /**
  * /objects/create
  *
@@ -125,6 +94,7 @@ Obj.prototype.create = function (object) {
             .catch(err => reject(err));
     });
 };
+
 
 /**
  * GET /objects/group/{groupID}
@@ -149,6 +119,7 @@ Obj.prototype.getByGroupID = function (groupID, opts = {}) {
     });
 };
 
+
 /**
  * GET /objects/:object_id
  *
@@ -169,6 +140,7 @@ Obj.prototype.get = function (objectID, opts) {
     });
 };
 
+
 /**
  * POST /objects/:object_id
  *
@@ -188,6 +160,7 @@ Obj.prototype.update = function (objectID, object) {
             .catch(err => reject(err));
     });
 };
+
 
 /**
  * POST /objects/:object_id/add-component
@@ -215,6 +188,7 @@ Obj.prototype.addComponent = function (objectID, component) {
     });
 };
 
+
 /**
  * POST /objects/:object_id/edit-component/:component_object_id
  *
@@ -241,6 +215,7 @@ Obj.prototype.editComponent = function (objectID, componentObjectID, component) 
     });
 };
 
+
 /**
  * DEL /objects/:object_id/delete-component/:component_object_id
  *
@@ -259,6 +234,7 @@ Obj.prototype.deleteComponent = function (objectID, componentObjectID) {
     });
 };
 
+
 /**
  * DEL /objects/:object_id/delete
  *
@@ -275,6 +251,7 @@ Obj.prototype.delete = function (objectID) {
             .catch(err => reject(err));
     });
 };
+
 
 /**
  * POST /objects/:object_id/star
@@ -297,6 +274,7 @@ Obj.prototype.star = function (objectID) {
     });
 };
 
+
 /**
  * DEL /objects/:object_id/un-star
  *
@@ -313,6 +291,7 @@ Obj.prototype.unStar = function (objectID) {
             .catch(err => reject(err));
     });
 };
+
 
 /**
  * POST /objects/:object_id/add-tag
@@ -336,6 +315,7 @@ Obj.prototype.addTag = function (objectID, tag) {
     });
 };
 
+
 /**
  * DELETE /objects/:object_id/remove-tag/:tag_id
  *
@@ -356,5 +336,6 @@ Obj.prototype.removeTag = function (objectID, tagID) {
             .catch(err => reject(err));
     });
 };
+
 
 module.exports = Obj;

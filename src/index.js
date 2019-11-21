@@ -29,6 +29,13 @@ var TPS = function (apiKey, opts = {}) {
         hostname: this.hostname,
         accessToken: this.accessToken,
         apiKey: this.apiKey,
+        getHeaders: function () {
+            var headers = {};
+            if (this.apiKey) headers["X-Api-Token"] = this.apiKey;
+            if (this.accessToken)
+                headers["Authorization"] = "Bearer " + this.accessToken;
+            return headers;
+        }
     }
 
     this.addresses = Object.assign(new Addresses, base);

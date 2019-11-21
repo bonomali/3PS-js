@@ -3,33 +3,9 @@ const axios = require("axios");
 /**
  * Job
  *
- * @param {String} apiKey
- * @param {Object} opts options
- *   @param {String} [opts.hostname]
- *   @param {String} [opts.accessToken]
  */
 var Job = function () { };
 
-// -----------------------------------------------------
-// Misc
-// -----------------------------------------------------
-
-/**
- * .getHeaders()
- *
- * @returns {Array}
- */
-Job.prototype.getHeaders = function () {
-    var headers = {};
-    if (this.apiKey) headers["X-Api-Token"] = this.apiKey;
-    if (this.accessToken)
-        headers["Authorization"] = "Bearer " + this.accessToken;
-    return headers;
-};
-
-// -----------------------------------------------------
-// JOBS
-// -----------------------------------------------------
 
 /**
  * POST /jobs/create
@@ -49,6 +25,7 @@ Job.prototype.create = function (job) {
     });
 };
 
+
 /**
  * GET /jobs/group/:group_id
  *
@@ -65,6 +42,7 @@ Job.prototype.getByGroupID = function (groupID) {
             .catch(err => reject(err));
     });
 };
+
 
 /**
  * GET /jobs/:job_id
@@ -83,6 +61,7 @@ Job.prototype.get = function (jobID) {
     });
 };
 
+
 /**
  * DELETE /jobs/:job_id/cancel
  *
@@ -99,6 +78,7 @@ Job.prototype.cancel = function (jobID) {
             .catch(err => reject(err));
     });
 };
+
 
 /**
  * POST /jobs/demo-print
@@ -127,6 +107,7 @@ Job.prototype.demoPrint = function (demoPrint) {
     });
 };
 
+
 // -----------------------------------------------------
 // Events
 // -----------------------------------------------------
@@ -148,6 +129,7 @@ Job.prototype.getEvents = function (jobID) {
     });
 };
 
+
 /**
  * POST /jobs/:job_id/events/create
  *
@@ -165,5 +147,25 @@ Job.prototype.createJobEvent = function (jobID, event) {
             .catch(err => reject(err));
     });
 };
+
+
+/**
+ * POST /jobs/:job_id/events/:event_id/delete
+ *
+ * @param {String} jobID
+ * @param {String} eventID
+ * @returns {Promise}
+ */
+Job.prototype.deleteJobEvent = function (jobID, eventID) {
+    return new Promise((resolve, reject) => {
+        axios
+            .delete(`${this.hostname}/jobs/${jobID}/events/${eventID}/delete`, {
+                headers: this.getHeaders()
+            })
+            .then(({ data }) => resolve(data))
+            .catch(err => reject(err));
+    });
+};
+
 
 module.exports = Job;

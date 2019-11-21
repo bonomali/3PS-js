@@ -3,32 +3,9 @@ const axios = require("axios");
 /**
  * Component
  *
- * @param {String} apiKey
- * @param {Object} opts options
- *   @param {String} [opts.hostname]
- *   @param {String} [opts.accessToken]
  */
 var Component = function () { };
 
-// -----------------------------------------------------
-// Misc
-// -----------------------------------------------------
-
-/**
- * .getHeaders()
- *
- * @returns {Array}
- */
-Component.prototype.getHeaders = function (extra = {}) {
-    var headers = {};
-    if (this.apiKey) headers["X-Api-Token"] = this.apiKey;
-    if (this.accessToken) headers["Authorization"] = "Bearer " + this.accessToken;
-    return Object.assign(extra, headers);
-};
-
-// -----------------------------------------------------
-// COMPONENTS
-// -----------------------------------------------------
 
 /**
  * GET /components
@@ -51,6 +28,7 @@ Component.prototype.latest = function (opts = {}) {
     });
 };
 
+
 /**
  * GET /components/starred
  *
@@ -71,6 +49,7 @@ Component.prototype.starred = function (opts = {}) {
             .catch(err => reject(err));
     });
 };
+
 
 /**
  * GET /components/search/{query}
@@ -93,6 +72,7 @@ Component.prototype.search = function (query, opts = {}) {
             .catch(err => reject(err));
     });
 };
+
 
 /**
  * /components/create
@@ -119,6 +99,7 @@ Component.prototype.create = function (component) {
     });
 };
 
+
 /**
  * GET /components/group/{groupID}
  *
@@ -141,6 +122,7 @@ Component.prototype.getByGroupID = function (groupID, opts = {}) {
     });
 };
 
+
 /**
  * GET /components/:component_id
  *
@@ -157,6 +139,7 @@ Component.prototype.get = function (componentID) {
             .catch(err => reject(err));
     });
 };
+
 
 /**
  * POST /components/:component_id
@@ -178,10 +161,12 @@ Component.prototype.update = function (componentID, component) {
     });
 };
 
+
 /**
  * GET /components/:component_id/download/:stl_id
  *
  * @param {String} componentID
+ * @param {String} stlID
  * @returns {Promise}
  */
 Component.prototype.downloadSTL = function (componentID, stlID) {
@@ -199,6 +184,7 @@ Component.prototype.downloadSTL = function (componentID, stlID) {
             .catch(err => reject(err));
     });
 };
+
 
 /**
  * POST /components/{component_id}/stl
@@ -225,6 +211,7 @@ Component.prototype.newSTL = function (componentID, formData) {
     });
 };
 
+
 /**
  * DEL /components/{component_id}/stl/{stl_id}/delete
  *
@@ -245,15 +232,18 @@ Component.prototype.deleteSTL = function (componentID, stlID) {
     });
 };
 
+
 /**
  * POST /components/{component_id}/stl/{stl_id}/estimate
  *
  * @param {String} componentID
  * @param {String} stlID
  * @param {Object} estimate
- *  @param {String} [estimate.scale]
+ *  @param {String} [estimate.machine]
+ *  @param {String} [estimate.material]
  *  @param {String} [estimate.layer_height]
  *  @param {String} [estimate.infill]
+ *  @param {String} [estimate.scale]
  * @returns {Promise}
  */
 Component.prototype.estimateSTL = function (componentID, stlID, estimate) {
@@ -266,6 +256,7 @@ Component.prototype.estimateSTL = function (componentID, stlID, estimate) {
             .catch(err => reject(err));
     });
 };
+
 
 /**
  * DEL /components/:component_id/delete
@@ -283,6 +274,7 @@ Component.prototype.delete = function (componentID) {
             .catch(err => reject(err));
     });
 };
+
 
 /**
  * POST /components/:component_id/star
@@ -306,6 +298,7 @@ Component.prototype.star = function (componentID) {
     });
 };
 
+
 /**
  * DEL /components/:component_id/un-star
  *
@@ -322,6 +315,7 @@ Component.prototype.unStar = function (componentID) {
             .catch(err => reject(err));
     });
 };
+
 
 /**
  * POST /components/:component_id/add-tag
@@ -345,6 +339,7 @@ Component.prototype.addTag = function (componentID, tag) {
     });
 };
 
+
 /**
  * DEL /components/:component_id/un-star
  *
@@ -367,5 +362,6 @@ Component.prototype.removeTag = function (componentID, tagID) {
             .catch(err => reject(err));
     });
 };
+
 
 module.exports = Component;
