@@ -78,10 +78,10 @@ Obj.prototype.search = function (query, opts = {}) {
  * /objects/create
  *
  * @param {Object} object Options
- *   @param {String} [object.user_id]
- *   @param {String} [object.group_id]
+ *   @param {String} [object.name]
  *   @param {String} [object.is_public]
- *   @param {File} [object.image]
+ *   @param {String} [object.group_id]
+ *   @param {File}   [object.image]
  * @returns {Promise}
  */
 Obj.prototype.create = function (object) {
@@ -97,7 +97,7 @@ Obj.prototype.create = function (object) {
 
 
 /**
- * GET /objects/group/{groupID}
+ * GET /objects/group/:group_id
  *
  *
  * @param {String} groupID
@@ -146,8 +146,9 @@ Obj.prototype.get = function (objectID, opts) {
  *
  * @param {String} objectID
  * @param {Object} object
- *   @param {String} [object.user_id]
- *   @param {String} [object.group_id]
+ *   @param {String} [object.name]
+ *   @param {String} [object.is_public]
+ *   @param {String} [object.description]
  * @returns {Promise}
  */
 Obj.prototype.update = function (objectID, object) {

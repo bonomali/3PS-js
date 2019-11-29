@@ -4,7 +4,7 @@
 
 ---
 
-### [3PS](https://ideea.io/3ps) &nbsp;&nbsp;|&nbsp;&nbsp; [Ideea.io](https://ideea.io) &nbsp;&nbsp;|&nbsp;&nbsp; [Full Documentation](https://ideea.io/docs/3ps) &nbsp;&nbsp;|&nbsp;&nbsp; [NPM](https://www.npmjs.com/package/3ps-js)
+### [3PS](https://ideea.io/3ps) &nbsp;&nbsp;|&nbsp;&nbsp; [Ideea.io](https://ideea.io) &nbsp;&nbsp;|&nbsp;&nbsp; [Getting Started](https://ideea.io/3ps/getting-started) &nbsp;&nbsp;|&nbsp;&nbsp; [Full Documentation](https://ideea.io/docs/3ps) &nbsp;&nbsp;|&nbsp;&nbsp; [NPM](https://www.npmjs.com/package/3ps-js)
 
 ---
 
@@ -81,9 +81,7 @@ tps.components.create({
 	infill: '20',
     scale: 1,
 }).then((component) => {
-
 	console.log(component)
-
 })
 ```
 
@@ -97,8 +95,6 @@ tps.jobs.create({
 		id: 'cead04bc-cf4f-402a-8e90-1f33669efa03'
 	}]
 }).then((job) => {
-
 	console.log(`Printing Job: ${job.id}`)
-
 })
 ```

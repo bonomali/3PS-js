@@ -77,22 +77,24 @@ Component.prototype.search = function (query, opts = {}) {
 /**
  * /components/create
  *
- * @param {FormData} component Options
- *   @param {String} [component.user_id]
+ * @param {FormData} component
+ *   @param {String} [component.name]
  *   @param {String} [component.group_id]
+ *   @param {String} [component.is_public]
+ *   @param {String} [component.layer_height]
+ *   @param {String} [component.material]
+ *   @param {String} [component.machine]
+ *   @param {String} [component.infill]
+ *   @param {String} [component.scale]
+ *   @param {String} [component.source]
+ *   @param {File}   [component.stl]
  * @returns {Promise}
  */
 Component.prototype.create = function (component) {
-
-    var extraHeaders = {}
-    if (typeof component.getHeaders === 'function') {
-        extraHeaders = component.getHeaders()
-    }
-
     return new Promise((resolve, reject) => {
         axios
             .post(`${this.hostname}/components/create`, component, {
-                headers: this.getHeaders(extraHeaders)
+                headers: this.getHeaders()
             })
             .then(({ data }) => resolve(data))
             .catch(err => reject(err));
@@ -146,8 +148,14 @@ Component.prototype.get = function (componentID) {
  *
  * @param {String} componentID
  * @param {Object} component
- *   @param {String} [component.user_id]
- *   @param {String} [component.group_id]
+ *   @param {String} [component.name]
+ *   @param {String} [component.is_public]
+ *   @param {String} [component.layer_height]
+ *   @param {String} [component.material]
+ *   @param {String} [component.machine]
+ *   @param {String} [component.infill]
+ *   @param {String} [component.scale]
+ *   @param {String} [component.source]
  * @returns {Promise}
  */
 Component.prototype.update = function (componentID, component) {
@@ -194,17 +202,10 @@ Component.prototype.downloadSTL = function (componentID, stlID) {
  * @returns {Promise}
  */
 Component.prototype.newSTL = function (componentID, formData) {
-
-    var extraHeaders = {}
-    if (typeof formData.getHeaders === 'function') {
-        extraHeaders = formData.getHeaders()
-    }
-
-
     return new Promise((resolve, reject) => {
         axios
             .post(`${this.hostname}/components/${componentID}/stl/`, formData, {
-                headers: this.getHeaders(extraHeaders),
+                headers: this.getHeaders(),
             })
             .then(({ data }) => resolve(data))
             .catch(err => reject(err));
@@ -280,7 +281,6 @@ Component.prototype.delete = function (componentID) {
  * POST /components/:component_id/star
  *
  * @param {String} componentID
- * @param {String} userId
  * @returns {Promise}
  */
 Component.prototype.star = function (componentID) {
@@ -341,7 +341,7 @@ Component.prototype.addTag = function (componentID, tag) {
 
 
 /**
- * DEL /components/:component_id/un-star
+ * DEL /components/:component_id/remove-tag/:tag_id 
  *
  * @param {String} componentID
  * @param {String} tagID

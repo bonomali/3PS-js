@@ -12,7 +12,6 @@ var Address = function () { };
  * @param {Object} address
  *   @param {String} [address.group_id]
  *   @param {String} [address.name]
- *   @param {String} [address.house_number]
  *   @param {String} [address.address_line_1]
  *   @param {String} [address.address_line_2]
  *   @param {String} [address.zipcode]
