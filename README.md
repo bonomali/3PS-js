@@ -18,7 +18,7 @@ The 3PS API represents an abstraction of a 3D printer, with this API you can upl
 $ npm install 3ps-js
 ```
 
-## Getting Started
+## Example
 
 ```js
 const TPS = require('3ps-js')
@@ -67,19 +67,19 @@ In 3PS a component represents a single .STL file and an object is a collection o
 
 ```js
 tps.components.create({
-	name: 'Dice',
-	is_public: false,
-	group_id: '00ffedbb-ff29-5138-9b5d-cd1f6ae3bc6b',
+   name: 'Dice',
+   is_public: false,
+   group_id: '00ffedbb-ff29-5138-9b5d-cd1f6ae3bc6b',
 
-	// .stl File
-	stl: fs.readFileSync('./dice.stl'),
+   // .stl File
+   stl: fs.readFileSync('./dice.stl'),
 
-	// Default Print Settings
-	machine: 'ender-3',
-	material: 'pla-red',
-	layer_height: '200',
-	infill: '20',
-    scale: 1,
+   // Default Print Settings
+   machine: 'ender-3',
+   material: 'pla-red',
+   layer_height: '200',
+   infill: '20',
+   scale: 1,
 }).then((component) => {
 	console.log(component)
 })
