@@ -4,7 +4,7 @@
 
 ---
 
-### [3PS](https://ideea.io/3ps) &nbsp;&nbsp;|&nbsp;&nbsp; [Ideea.io](https://ideea.io) &nbsp;&nbsp;|&nbsp;&nbsp; [Getting Started](https://ideea.io/3ps/getting-started) &nbsp;&nbsp;|&nbsp;&nbsp; [Full Documentation](https://ideea.io/docs/3ps) &nbsp;&nbsp;|&nbsp;&nbsp; [NPM](https://www.npmjs.com/package/3ps-js)
+### [3PS](https://ideea.io/3ps) &nbsp;&nbsp;|&nbsp;&nbsp; [Ideea.io](https://ideea.io) &nbsp;&nbsp;|&nbsp;&nbsp; [User Guide](https://ideea.io/3ps/user-guide) &nbsp;&nbsp;|&nbsp;&nbsp; [Full Documentation](https://ideea.io/docs/3ps) &nbsp;&nbsp;|&nbsp;&nbsp; [NPM](https://www.npmjs.com/package/3ps-js)
 
 ---
 
