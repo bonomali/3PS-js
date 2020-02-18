@@ -164,6 +164,27 @@ Obj.prototype.update = function (objectID, object) {
 
 
 /**
+ * POST /objects/:object_id/fastners
+ *
+ * @param {String} objectID
+ * @param {Array} fasteners
+ *   @param {String} [fasteners.fastener_id]
+ *   @param {String} [fasteners.quantity]
+ * @returns {Promise}
+ */
+Obj.prototype.updateFastners = function (objectID, fasteners) {
+    return new Promise((resolve, reject) => {
+        axios
+            .post(`${this.hostname}/objects/${objectID}/fasteners`, { fasteners }, {
+                headers: this.getHeaders()
+            })
+            .then(({ data }) => resolve(data))
+            .catch(err => reject(err));
+    });
+};
+
+
+/**
  * POST /objects/:object_id/add-component
  *
  * @param {String} objectID

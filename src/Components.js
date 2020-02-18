@@ -235,7 +235,7 @@ Component.prototype.deleteSTL = function (componentID, stlID) {
 
 
 /**
- * POST /components/{component_id}/stl/{stl_id}/estimate
+ * POST estimatorHostname /estimator/components/{component_id}/stl/{stl_id}
  *
  * @param {String} componentID
  * @param {String} stlID
@@ -250,7 +250,7 @@ Component.prototype.deleteSTL = function (componentID, stlID) {
 Component.prototype.estimateSTL = function (componentID, stlID, estimate) {
     return new Promise((resolve, reject) => {
         axios
-            .post(`${this.hostname}/components/${componentID}/stl/${stlID}/estimate`, estimate, {
+            .post(`${this.estimatorHostname}/estimator/components/${componentID}/stl/${stlID}`, estimate, {
                 headers: this.getHeaders(),
             })
             .then(({ data }) => resolve(data))
@@ -354,6 +354,101 @@ Component.prototype.removeTag = function (componentID, tagID) {
                 `${
                 this.hostname
                 }/components/${componentID}/remove-tag/${tagID}`,
+                {
+                    headers: this.getHeaders()
+                }
+            )
+            .then(({ data }) => resolve(data))
+            .catch(err => reject(err));
+    });
+};
+
+
+/**
+ * GET /components/:component_id/files
+ *
+ * @param {String} componentID
+ * @returns {Promise}
+ */
+Component.prototype.getFiles = function (componentID) {
+    return new Promise((resolve, reject) => {
+        axios
+            .get(
+                `${
+                this.hostname
+                }/components/${componentID}/files`,
+                {
+                    headers: this.getHeaders()
+                }
+            )
+            .then(({ data }) => resolve(data))
+            .catch(err => reject(err));
+    });
+};
+
+
+/**
+ * GET /components/:component_id/files/:file_id/download
+ *
+ * @param {String} componentID
+ * @param {String} fileID
+ * @returns {Promise}
+ */
+Component.prototype.downloadFile = function (componentID, fileID) {
+    return new Promise((resolve, reject) => {
+        axios
+            .get(
+                `${
+                this.hostname
+                }/components/${componentID}/files/${fileID}/download`,
+                {
+                    headers: this.getHeaders()
+                }
+            )
+            .then(({ data }) => resolve(data))
+            .catch(err => reject(err));
+    });
+};
+
+
+/**
+ * POST /components/:component_id/files
+ *
+ * @param {String} componentID
+ * @param {FormData} formData
+ * @returns {Promise}
+ */
+Component.prototype.newFile = function (componentID, formData) {
+    return new Promise((resolve, reject) => {
+        axios
+            .post(
+                `${
+                this.hostname
+                }/components/${componentID}/files`, formData,
+                {
+                    headers: this.getHeaders()
+                }
+            )
+            .then(({ data }) => resolve(data))
+            .catch(err => reject(err));
+    });
+};
+
+
+/**
+ * DEL /components/:component_id/files/:file_id 
+ *
+ * @param {String} componentID
+ * @param {String} fileID
+ * @returns {Promise}
+ */
+Component.prototype.deleteFile = function (componentID, fileID) {
+    return new Promise((resolve, reject) => {
+        axios
+            .delete(
+                `${
+                this.hostname
+                }/components/${componentID}/files/${fileID}/delete`,
                 {
                     headers: this.getHeaders()
                 }
